@@ -137,9 +137,17 @@ extern  uint8_t hid_keyboard_out_report_value;
 /*********************************************************************
  * LOCAL FUNCTIONS
  */
+#define iBLE_LOGO_STEP_MS       8               // 灯效一帧, 与USB(4ms扫描, >7ms)实际节拍一致
+#define iBLE_HINT_STEP_MS       16              // 提示一拍, 与USB(4ms扫描, >15ms)实际节拍一致
+#define iBLE_LED_RESYNC_MS      100             // 超过此时间没调用(休眠/广播)则重新对时, 不补帧
+
+static uint32_t ble_logo_time;                  // 蓝牙模式灯效的RTC节拍
+static uint32_t ble_hint_time;                  // 蓝牙模式提示的RTC节拍
+
 __RAM_CODE uint8_t ex2_app_mouse_scan(void)
 {
     uint8_t temp_buff[8];
+    uint32_t rtc_now;
 
     if (!hid_notification_is_enabled()) {
         return 0;
@@ -151,15 +159,27 @@ __RAM_CODE uint8_t ex2_app_mouse_scan(void)
     {
         matrixkey_scan();
         wheel_scan();
-        logo_process();
 
-        drv_ledc_write();                       // ARGB每个周期调用一次写数据处理
+        // 灯光逻辑按RTC真实时间走, 不按调用次数: 本函数每个连接间隔调用一次, 间隔由主机决定(常见15~30ms),
+        // 原来每次调用走一帧灯效、隔次走一拍提示, 间隔30ms时比USB慢约4倍. 节拍与USB一致: 灯效8ms, 提示16ms
+        rtc_now = drv_rtc_read(OM_RTC);
+        if(mMS_TO_TICK(iBLE_LED_RESYNC_MS) < (rtc_now - ble_logo_time))
+            ble_logo_time = rtc_now - mMS_TO_TICK(iBLE_LOGO_STEP_MS);   // 休眠/广播后停了很久, 不补帧, 只走一步
+        while(mMS_TO_TICK(iBLE_LOGO_STEP_MS) <= (rtc_now - ble_logo_time))
+        {
+            ble_logo_time += mMS_TO_TICK(iBLE_LOGO_STEP_MS);
+            logo_process();
+        }
+        drv_ledc_write();                       // 补完的帧算完再写一次
 
-        lvd_scan_count++;
-        if(0==(lvd_scan_count&0x01))
-            device_led_process();               // 15ms
-        else
+        if(mMS_TO_TICK(iBLE_LED_RESYNC_MS) < (rtc_now - ble_hint_time))
+            ble_hint_time = rtc_now - mMS_TO_TICK(iBLE_HINT_STEP_MS);
+        while(mMS_TO_TICK(iBLE_HINT_STEP_MS) <= (rtc_now - ble_hint_time))
+        {
+            ble_hint_time += mMS_TO_TICK(iBLE_HINT_STEP_MS);
+            device_led_process();
             led_hint_process();
+        }
     }
     else
     {
