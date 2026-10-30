@@ -18,7 +18,7 @@
 // 正常矩阵表
 //
 
-// WIN键值表
+// MAC键值表
 unsigned char           const   matrixkey_mac_tbl[] =
 {
 // C2
@@ -28,16 +28,16 @@ unsigned char           const   matrixkey_mac_tbl[] =
     iSTD_QUROPE2,       iKEY_TYPE_STD|iKEY_PRESS,
     iSTD_X,             iKEY_TYPE_STD|iKEY_PRESS,    
     iSTD_NULL,          iKEY_TYPE_INVALID,
-    iMMK_MEDIA_SELECT_L,iKEY_TYPE_MMK|iMMK_MEDIA_SELECT_H,
+    iMMK_BRIGHT_SUM_L,  iKEY_TYPE_MMK|iMMK_BRIGHT_SUM_H,      // F1  屏幕亮度减
     iSTD_2,             iKEY_TYPE_STD|iKEY_PRESS,
 // C3
     iSTD_E,             iKEY_TYPE_STD|iKEY_PRESS,    
-    iMMK_VOLUMEUP_L,    iKEY_TYPE_MMK|iMMK_VOLUMEUP_H,
+    iMMK_MISSION_CTRL_L,iKEY_TYPE_MMK|iMMK_MISSION_CTRL_H,    // F3  多任务窗口
     iSTD_D,             iKEY_TYPE_STD|iKEY_PRESS,
-    iMMK_MUTE_L,        iKEY_TYPE_MMK|iMMK_MUTE_H,
+    iMMK_LAUNCHPAD_L,   iKEY_TYPE_MMK|iMMK_LAUNCHPAD_H,       // F4  程序列表
     iSTD_C,             iKEY_TYPE_STD|iKEY_PRESS,  
     iSTD_NULL,          iKEY_TYPE_INVALID,         
-    iMMK_VOLUMEDOWN_L,  iKEY_TYPE_MMK|iMMK_VOLUMEDOWN_H,  
+    iMMK_BRIGHT_ADD_L,  iKEY_TYPE_MMK|iMMK_BRIGHT_ADD_H,      // F2  屏幕亮度加
     iSTD_3,             iKEY_TYPE_STD|iKEY_PRESS,              
 // C4
     iSTD_R,             iKEY_TYPE_STD|iKEY_PRESS,   
@@ -61,19 +61,19 @@ unsigned char           const   matrixkey_mac_tbl[] =
     iSTD_I,             iKEY_TYPE_STD|iKEY_PRESS,
     iSTD_SQUARE_BRACKET_RIGHT, iKEY_TYPE_STD|iKEY_PRESS,
     iSTD_K,             iKEY_TYPE_STD|iKEY_PRESS,
-    iMMK_PREV_TRACK_L,  iKEY_TYPE_MMK|iMMK_PREV_TRACK_H,
+    iLED_BRIGHT_ADD,    iKEY_TYPE_SPECIAL,                    // F6  键盘背光亮度加
     iSTD_COMMA,         iKEY_TYPE_STD|iKEY_PRESS,
     iSTD_KEYBOARD_RO,   iKEY_TYPE_STD|iKEY_PRESS,
     iSTD_ADD,           iKEY_TYPE_STD|iKEY_PRESS,
     iSTD_8,             iKEY_TYPE_STD|iKEY_PRESS,
 // C7
     iSTD_O,             iKEY_TYPE_STD|iKEY_PRESS,
-    iMMK_PLAY_PAUSE_L,  iKEY_TYPE_MMK|iMMK_PLAY_PAUSE_H,
+    iMMK_PREV_TRACK_L,  iKEY_TYPE_MMK|iMMK_PREV_TRACK_H,      // F7  上一曲
     iSTD_L,             iKEY_TYPE_STD|iKEY_PRESS,   
     iSTD_NULL,          iKEY_TYPE_INVALID,
     iSTD_FULLSTOP,      iKEY_TYPE_STD|iKEY_PRESS,
     iSTD_APP,           iKEY_TYPE_STD|iKEY_PRESS,
-    iMMK_NEXT_TRACK_L,  iKEY_TYPE_MMK|iMMK_NEXT_TRACK_H,
+    iMMK_PLAY_PAUSE_L,  iKEY_TYPE_MMK|iMMK_PLAY_PAUSE_H,      // F8  暂停/播放
     iSTD_9,             iKEY_TYPE_STD|iKEY_PRESS,    
 // C8
     iSTD_P,             iKEY_TYPE_STD|iKEY_PRESS,
@@ -97,11 +97,11 @@ unsigned char           const   matrixkey_mac_tbl[] =
     iSTD_KEYBOARD_YEN,  iKEY_TYPE_STD|iKEY_PRESS,
     iSTD_BACKSPACE,     iKEY_TYPE_STD|iKEY_PRESS,
     iSTD_BACKSLASH,     iKEY_TYPE_STD|iKEY_PRESS,
-    iKEY_KEY_LOCK,      iKEY_TYPE_SPECIAL,
+    iMMK_VOLUMEDOWN_L,  iKEY_TYPE_MMK|iMMK_VOLUMEDOWN_H,      // F11 音量减
     iSTD_ENTER,         iKEY_TYPE_STD|iKEY_PRESS,
-    iMMK_CALCULATOR_L,  iKEY_TYPE_MMK|iMMK_CALCULATOR_H,
-    iMMK_MAIL_L,        iKEY_TYPE_MMK|iMMK_MAIL_H,  
-    iMMK_WWW_HOME_L,    iKEY_TYPE_MMK|iMMK_WWW_HOME_H,
+    iMMK_VOLUMEUP_L,    iKEY_TYPE_MMK|iMMK_VOLUMEUP_H,        // F12 音量加
+    iMMK_NEXT_TRACK_L,  iKEY_TYPE_MMK|iMMK_NEXT_TRACK_H,      // F9  下一曲
+    iMMK_MUTE_L,        iKEY_TYPE_MMK|iMMK_MUTE_H,            // F10 静音
 // C11
     iSTD_NUMPAD7,       iKEY_TYPE_STD|iKEY_PRESS,
     iSTD_NUMPAD4,       iKEY_TYPE_STD|iKEY_PRESS,
@@ -155,7 +155,7 @@ unsigned char           const   matrixkey_mac_tbl[] =
     iSTD_NULL,          iKEY_TYPE_STD|iKEY_PRESS|iRIGHT_CTRL,
     iSTD_NULL,          iKEY_TYPE_STD|iKEY_PRESS|iLEFT_GUI,
     iSTD_NULL,          iKEY_TYPE_STD|iKEY_PRESS|iLEFT_CTRL,
-    iMMK_STOP_L,        iKEY_TYPE_MMK|iMMK_STOP_H,
+    iLED_BRIGHT_SUB,    iKEY_TYPE_SPECIAL,                    // F5  键盘背光亮度减
 // C17
     iSTD_Q,             iKEY_TYPE_STD|iKEY_PRESS,
     iSTD_TAB,           iKEY_TYPE_STD|iKEY_PRESS,
