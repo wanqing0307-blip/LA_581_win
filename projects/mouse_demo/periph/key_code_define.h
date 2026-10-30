@@ -343,6 +343,10 @@
 #define iMMK_BRIGHT_ADD_L       0x6F
 #define iMMK_BRIGHT_SUM_H       0x00
 #define iMMK_BRIGHT_SUM_L       0x70
+#define iMMK_MISSION_CTRL_H     0x02    // AC Desktop Show All Windows, MAC多任务窗口
+#define iMMK_MISSION_CTRL_L     0x9F
+#define iMMK_LAUNCHPAD_H        0x02    // AC Desktop Show All Applications, MAC程序列表
+#define iMMK_LAUNCHPAD_L        0xA2
 
 #define iMMK_NEXT_TRACK_H       0x00
 #define iMMK_NEXT_TRACK_L       0xB5

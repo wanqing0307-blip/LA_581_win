@@ -68,6 +68,8 @@ uint16_t                        delay_time_count;
 uint8_t                         rgb_index;
 uint8_t                         led_process_index;
 uint8_t                         hint_time_count;
+uint8_t                         caps_hint_count;        // 进入WIN系统时CAPS闪烁提示计数
+uint8_t                         num_hint_count;         // 进入MAC系统时NUM闪烁提示计数
 
 __ALIGNED(4) uint8_t            pwm_rgb_tbl[iLED_MAX][3];
 
@@ -121,11 +123,25 @@ void led_status_hint(void)
     bool hint_off;                              // RGB提示闪烁的灭相
 
     mLED_VDD_DIS;
-    if(kb_led_status&bnum_lock)                 // NUM/CAPS 始终按主机状态显示, RGB提示期间也不灭
+    if(0 != num_hint_count)                     // NUM闪烁提示期间不跟随主机状态
+    {
+        if(0 == ((iCAPS_HINT_COUNT-num_hint_count)&0x08))
+            mLED_NUM_LOW
+        else
+            mLED_NUM_HIGH
+    }
+    else if(kb_led_status&bnum_lock)            // NUM/CAPS 始终按主机状态显示, RGB提示期间也不灭
         mLED_NUM_LOW
     else
         mLED_NUM_HIGH
-    if(kb_led_status&bcaps_lock)
+    if(0 != caps_hint_count)                    // CAPS闪烁提示期间不跟随主机状态
+    {
+        if(0 == ((iCAPS_HINT_COUNT-caps_hint_count)&0x08))
+            mLED_CAPS_LOW
+        else
+            mLED_CAPS_HIGH
+    }
+    else if(kb_led_status&bcaps_lock)
         mLED_CAPS_LOW
     else
         mLED_CAPS_HIGH
@@ -281,6 +297,11 @@ extern void key_into_fcc_test(void);
 ******************************************************************************/
 void device_led_process(void)
 {
+    if(0 != caps_hint_count)                    // 15ms一次, 放在模式提示前面, 不受其return影响
+        caps_hint_count--;
+    if(0 != num_hint_count)
+        num_hint_count--;
+
 //-----------------------------------------------------------------------------
 // 模式提示
 //
