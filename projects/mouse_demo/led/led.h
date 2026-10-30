@@ -179,8 +179,9 @@ extern uint16_t                 delay_time_count;
 extern uint8_t                  rgb_index;
 extern uint8_t                  led_process_index;
 extern uint8_t                  hint_time_count;
-#define iCAPS_HINT_COUNT        80      // CAPS闪烁提示: 5次 x (8亮+8灭) x 15ms
+#define iCAPS_HINT_COUNT        80      // CAPS/NUM闪烁提示: 5次 x (8亮+8灭) x 15ms
 extern uint8_t                  caps_hint_count;
+extern uint8_t                  num_hint_count;
 
 extern uint8_t                  pwm_rgb_tbl[iLED_MAX][3];
 

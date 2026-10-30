@@ -954,8 +954,8 @@ std_key_decode_1:
                                     key_ctrl &= ~bwin_mac_sataus;
                                     key_ctrl |= bfn_save_status;
                                 }
-                                if(0 == hint_time_count)
-                                    hint_time_count = 0x37;
+                                if(0 == num_hint_count)     // FN+S进入MAC: NUM灯闪烁5次提示
+                                    num_hint_count = iCAPS_HINT_COUNT;
 
                                 break;
 //                            case iKEY_WIN_MAC&0x0F:
